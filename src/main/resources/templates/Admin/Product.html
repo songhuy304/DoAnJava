@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/asset/style.css">
+</head>
+<body>
+<th:block th:replace="layoutadmin :: sidebar">
+
+</th:block>
+
+<section id="content">
+    <!-- NAVBAR -->
+    <nav>
+        <i class='bx bx-menu'></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form action="#">
+            <div class="form-input">
+                <input type="search" placeholder="Search...">
+                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+            </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden>
+        <label for="switch-mode" class="switch-mode"></label>
+        <a href="#" class="notification">
+            <i class='bx bxs-bell'></i>
+            <span class="num">8</span>
+        </a>
+        <a href="#" class="profile">
+            <img src="img/people.png">
+        </a>
+    </nav>
+    <!-- NAVBAR -->
+
+    <!-- MAIN -->
+    <main>
+        <div class="head-title">
+            <div class="left">
+                <h1>Dashboard</h1>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li><i class='bx bx-chevron-right'></i></li>
+                    <li>
+                        <a class="active" href="#">Home</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Quản Lý Sản Phẩm</h3>
+                    <a href="/admin/product/add" class="btn btn-primary">Thêm Mới</a>
+                    <input class="form-input" type="text" id="searchInput" placeholder="Search...">
+
+                </div>
+                <table>
+                    <thead>
+
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên</th>
+                        <th>Ảnh</th>
+                        <th>Giá</th>
+                        <th>Active</th>
+                        <th>Số lượng</th>
+                        <th>Hành Động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product , i : ${LIST_PRODUCT.content}" var="p">
+                        <td th:text="${i.index + 1}"></td>
+                        <td th:text="${product.title}"></td>
+                        <td>
+                            <img th:src="@{/img/__${product.image}__}" alt="Product Image"/>
+
+
+                        </td>
+
+                        <td th:text="${product.price}"></td>
+
+                        <td>
+                            <span th:if="${product.isactive}">
+                                 <i class='bx bx-check' style='color:#08f43b'  ></i>
+                                 </span>
+                            <span th:unless="${product.isactive}">
+                            <i class='bx bx-x' style='color:#f50218'  ></i>
+                             </span>
+                        </td>
+                        <td th:text="${product.quantity}"></td>
+
+                        <td>
+                            <a th:href="@{/admin/product/delete/{id}(id=${product.id})}"
+                               onclick="return confirm('Ban co Chac chan?')"> <i style="color: red"
+                                                                                 class='bx bx-trash'></i></a>
+
+
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="/admin/product/page?p=0">First</a></li>
+                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.number - 1})}">Previous</a></li>
+                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.number + 1})}">Next</a></li>
+                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.totalPages - 1 })}">Next</a></li>
+
+
+                    </ul>
+
+                </nav>
+            </div>
+
+        </div>
+
+
+    </main>
+
+    <!-- MAIN -->
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var input = document.getElementById('searchInput');
+
+        input.addEventListener('keyup', function(event) {
+            if (event.keyCode === 13) { // Kiểm tra nút Enter được nhấn
+                var searchText = event.target.value.toLowerCase();
+                var rows = document.querySelectorAll('table tr');
+
+                rows.forEach(function(row) {
+                    var columns = row.getElementsByTagName('td');
+                    var found = false;
+
+                    for (var i = 0; i < columns.length; i++) {
+                        var cellText = columns[i].textContent.toLowerCase();
+                        if (cellText.indexOf(searchText) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found) {
+                        row.style.display = ''; // Hiển thị dòng nếu tìm thấy kết quả
+                    } else {
+                        row.style.display = 'none'; // Ẩn dòng nếu không tìm thấy kết quả
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
