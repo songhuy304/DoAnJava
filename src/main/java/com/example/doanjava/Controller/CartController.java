@@ -47,10 +47,17 @@ public class CartController {
         cartService.removeCart(session);
         return "redirect:/cart ";
     }
-    @GetMapping("/checkout")
-    public String checkout(HttpSession session, @ModelAttribute("ord") OrderViewModel ord) {
+    @GetMapping("/thanhtoan")
+    public String thanhtoan(HttpSession session, @ModelAttribute("ord") OrderViewModel ord) {
         cartService.saveCart(session, ord);
         return "product/cart";
+    }
+    @GetMapping("/checkout")
+    public String checkout(HttpSession session, @ModelAttribute("ord") OrderViewModel ord , Model model)
+    {
+        session.setAttribute("ord", ord);
+        cartService.saveCart(session, ord);
+        return "redirect:/cart ";
     }
 
 }

@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.SERIALIZABLE,
@@ -62,16 +64,29 @@ public class CartService {
         invoice.setCustomerName(ord.getCustomerName());
         invoice.setAddress(ord.getAddress());
         invoice.setPhone(ord.getPhone());
+        invoice.setMaDH(generateOrderCode());
+
         invoice.setTypePayment(ord.getTypePayment());
         invoiceRepository.save(invoice);
         cart.getCartItems().forEach(item -> {
             var items = new ItemInvoice();
             items.setInvoice(invoice);
             items.setQuantity(item.getQuantity());
+            items.setPrice(item.getPrice());
             items.setProduct(productRepositoryRepository.findById(item.getBookId())
                             .orElseThrow());
             itemInvoiceRepository.save(items);
         });
         removeCart(session);
+    }
+    private String generateOrderCode() {
+        // Generate a random number between 1000 and 9999
+        Random random = new Random();
+        int randomNumber = random.nextInt(9000) + 1000;
+
+        // Create the order code using the generated random number
+        String orderCode = "DH" + randomNumber;
+
+        return orderCode;
     }
 }

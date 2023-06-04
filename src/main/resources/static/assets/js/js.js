@@ -17,4 +17,10 @@ $(document).ready(function() {
     $('#capnhatgiohang').on('click',function (){
         location.reload(); // Tải lại trang
     });
+    $('#checkout').on('click', function() {
+        $('#thongtincanha').css("display", "block");
+        $('html, body').animate({
+            scrollTop: $('#thongtincanha').offset().top
+        }, 500);
+    });
 });;

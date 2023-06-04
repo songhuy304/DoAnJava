@@ -34,7 +34,12 @@ public class Invoice {
     @Column(name = "Address")
     private String Address;
     @Column(name = "TypePayment")
-    private Integer TypePayment ;
+    private String TypePayment ;
+
+    public void setTypePayment(String typePayment) {
+        TypePayment = typePayment;
+    }
+
     @Column(name = "MaDH")
     private String MaDH ;
 
@@ -62,13 +67,7 @@ public class Invoice {
         Address = address;
     }
 
-    public Integer getTypePayment() {
-        return TypePayment;
-    }
 
-    public void setTypePayment(Integer typePayment) {
-        TypePayment = typePayment;
-    }
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
     @ToString.Exclude
