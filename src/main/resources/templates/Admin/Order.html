@@ -56,12 +56,35 @@
             </div>
 
         </div>
+        <ul class="box-info">
+            <li>
+                <i class="bx bxs-calendar-check"></i>
+                <span class="text">
+						<h3 th:text="${total}" ></h3>
+						<p>Doanh Thu</p>
+					</span>
+            </li>
+            <li>
+                <i class="bx bxs-group"></i>
+                <span class="text">
+                        <h3 th:text="${countDH}" ></h3>
+						<p>Đơn Hàng Bán Được</p>
+					</span>
+            </li>
+            <li>
+                <i class="bx bxs-dollar-circle"></i>
+                <span class="text">
+
+						<p>Total Sales</p>
+					</span>
+            </li>
+        </ul>
         <div class="table-data">
             <div class="order">
                 <div class="head">
-                    <h3>Quản Lý Sản Phẩm</h3>
-                    <a href="/admin/product/add" class="btn btn-primary">Thêm Mới</a>
-                    <input class="form-input" type="text" id="searchInput" placeholder="Search...">
+                    <h3>Quản Lý Đơn Hàng</h3>
+<!--                    <a href="/admin/product/add" class="btn btn-primary">Thêm Mới</a>-->
+<!--                    <input class="form-input" type="text" id="searchInput" placeholder="Search...">-->
 
                 </div>
                 <table>
@@ -69,43 +92,26 @@
 
                     <tr>
                         <th>STT</th>
-                        <th>Tên</th>
-                        <th>Ảnh</th>
-                        <th>Giá</th>
-                        <th>Active</th>
-                        <th>Số lượng</th>
-                        <th>Hành Động</th>
+                        <th>Mã DH</th>
+                        <th>Số Điện Thoại Đặt</th>
+                        <th>Ngày Đặt</th>
+                        <th>Tổng Tiền</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="product , i : ${LIST_PRODUCT.content}" var="p">
+                    <tr th:each="invoi , i : ${LIST_Invoice}">
                         <td th:text="${i.index + 1}"></td>
-                        <td th:text="${product.title}"></td>
-                        <td>
-                            <img th:src="@{/img/__${product.image}__}" alt="Product Image"/>
+                        <td th:text="${invoi.getMaDH()}"></td>
+                        <td th:text="${invoi.getPhone()}"></td>
+                        <td th:text="${#dates.format(invoi.getInvoiceDate(), 'dd/MM/yyyy')}"></td>
 
 
-                        </td>
 
-                        <td  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +'VND'  "></td>
-
-                        <td>
-                            <span th:if="${product.isactive}">
-                                 <i class='bx bx-check' style='color:#08f43b'  ></i>
-                                 </span>
-                            <span th:unless="${product.isactive}">
-                            <i class='bx bx-x' style='color:#f50218'  ></i>
-                             </span>
-                        </td>
-                        <td th:text="${product.quantity}"></td>
-
-                        <td>
-                            <a th:href="@{/admin/product/delete/{id}(id=${product.id})}"
-                               onclick="return confirm('Ban co Chac chan?')"> <i style="color: red"
-                                                                                 class='bx bx-trash'></i></a>
+                        <td  th:text="${#numbers.formatDecimal(invoi.price, 0, 'COMMA', 0, 'POINT')}   "></td>
 
 
-                        </td>
+
                     </tr>
 
 
@@ -113,10 +119,10 @@
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="/admin/product/page?p=0">First</a></li>
-                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.number - 1})}">Previous</a></li>
-                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.number + 1})}">Next</a></li>
-                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.totalPages - 1 })}">Next</a></li>
+<!--                        <li class="page-item"><a class="page-link" href="/admin/product/page?p=0">First</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_Invoice.number - 1})}">Previous</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_Invoice.number + 1})}">Next</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_Invoice.totalPages - 1 })}">Next</a></li>-->
 
 
                     </ul>

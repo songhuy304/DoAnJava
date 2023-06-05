@@ -14,17 +14,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 @Controller
 @RequestMapping("/admin/Order")
 public class OderAdminController {
     @Autowired
     private InvoiceService invoiceService;
-    @GetMapping("/page")
-    public String showAllproduct(Model model , @RequestParam("p") Optional<Integer> p ){
-        Pageable pageable = (Pageable) PageRequest.of(p.orElse(0) ,10);
-        Page<Invoice> page = invoiceService.findAll(pageable);
-        model.addAttribute("LIST_Invoice",page);
+    @GetMapping()
+    public String showAllproduct(Model model ){
+        List<Invoice> list = invoiceService.getAllorder();
+        model.addAttribute("LIST_Invoice",list);
+
+        Integer totalPrice = invoiceService.getTotalPrice();
+        model.addAttribute("total" ,totalPrice );
+        Integer  countMaDH = invoiceService.getTotalCount();
+        model.addAttribute("countDH" ,countMaDH );
+
         return "Admin/Order";
     }
 }

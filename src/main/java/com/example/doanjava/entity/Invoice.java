@@ -25,7 +25,6 @@ public class Invoice {
     @Column(name = "invoice_date")
     private Date invoiceDate = new Date();
     @Column(name = "total")
-
     private Double price;
     @Column(name = "CustomerName")
     private String CustomerName;
