@@ -23,4 +23,7 @@ $(document).ready(function() {
             scrollTop: $('#thongtincanha').offset().top
         }, 500);
     });
-});;
+
+
+});
+//

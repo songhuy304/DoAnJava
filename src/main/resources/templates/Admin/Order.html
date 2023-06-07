@@ -60,7 +60,7 @@
             <li>
                 <i class="bx bxs-calendar-check"></i>
                 <span class="text">
-						<h3 th:text="${total}" ></h3>
+						<h3 th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}" ></h3>
 						<p>Doanh Thu</p>
 					</span>
             </li>

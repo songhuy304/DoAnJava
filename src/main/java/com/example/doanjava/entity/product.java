@@ -1,5 +1,6 @@
 package com.example.doanjava.entity;
 
+import com.example.doanjava.Validator.annotation.ValidUserId;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -33,6 +34,11 @@ public class product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ItemInvoice> itemInvoices = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    @ValidUserId
+    private User user;
+
 
     public product(){}
     public product(Long id, String title, String description, Double price, String image, Integer quantity, Boolean isactive, Category category) {

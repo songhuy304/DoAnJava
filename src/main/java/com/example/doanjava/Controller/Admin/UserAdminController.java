@@ -13,9 +13,5 @@ import java.util.List;
 public class UserAdminController {
     @Autowired
     private UserService userService;
-    public String home(Model model){
-        List<User> users = userService.getAlluser();
-        model.addAttribute("listuser", users);
-        return "Admin/user";
-    }
+
 }

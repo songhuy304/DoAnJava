@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-spingsecurity4">
 <head>
   <title>Colo Shop Categories</title>
   <meta charset="utf-8">
@@ -50,9 +51,20 @@
                   </a>
                 </li>
 
+
               </ul>
 
             </nav>
+            <ul class="nav-item">
+              <li sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                  <button class="btn btn-outline-danger" type="submit">Logout</button>
+                </form>
+              </li>
+              <li sec:authorize="!isAuthenticated()">
+                <a class="btn btn-outline-primary" href="/login">Login</a>
+              </li>
+            </ul>
 
 
 
