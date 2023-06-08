@@ -1,9 +1,11 @@
 package com.example.doanjava.Controller.Admin;
 
+
 import com.example.doanjava.entity.Category;
 import com.example.doanjava.entity.product;
 import com.example.doanjava.services.CategoryService;
 import com.example.doanjava.services.productService;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Optional;
 
 import java.util.List;
@@ -28,32 +32,43 @@ public class ProductAdminController {
     private productService productsService;
     @Autowired
     private CategoryService categoryService;
-    @GetMapping("/page")
-    public String showAllproduct(Model model , @RequestParam("p") Optional<Integer> p ){
-        Pageable pageable = (Pageable) PageRequest.of(p.orElse(0) ,10);
-        Page<product> page = productsService.findAll(pageable);
-        model.addAttribute("LIST_PRODUCT",page);
+    @GetMapping()
+    public String showAllBooks(
+            @NotNull Model model,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortBy) {
+        model.addAttribute("products", productsService.getAllmoi(pageNo,
+                pageSize, sortBy));
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("categories",
+                categoryService.getAllcategory());
+        int totalProducts = productsService.getAllproducts(pageNo, pageSize, sortBy).size();
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+        model.addAttribute("totalPages", totalPages);
         return "Admin/Product";
     }
-    @GetMapping("/show")
-    public String showAllishome(Model model){
-        List<product> items = productsService.getAllproduct().stream()
-                .filter(product -> Boolean.TRUE.equals(product.getIsactive()))
-                .collect(Collectors.toList());
-        model.addAttribute("items", items);
-        return "Admin/test";
-    }
+
+//    @GetMapping("/page")
+//    public String showAllproduct(Model model , @RequestParam("p") Optional<Integer> p ){
+//        Pageable pageable = (Pageable) PageRequest.of(p.orElse(0) ,10);
+//        Page<product> page = productsService.findAll(pageable);
+//        model.addAttribute("LIST_PRODUCT",page);
+//        return "Admin/Product";
+//    }
+
     @GetMapping("/add")
     public String addproductForm(Model model){
-        model.addAttribute("product",new product());
+        model.addAttribute("products",new product());
         model.addAttribute("categories",categoryService.getAllcategory());
         return "Admin/add";
     }
 
     @PostMapping("/add")
 
-    public String addproduct(@ModelAttribute("product") product product){
-        productsService.Addproduct(product);
+    public String addproduct(@ModelAttribute("products") product products,@RequestParam("file") MultipartFile file){
+        productsService.Addproduct(products ,file);
 
         return "redirect:/admin/product/page";
 

@@ -22,8 +22,34 @@ public class product {
     private String Description;
     @Column(name = "price")
     private Double price;
-    @Column(name ="Image")
+
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String Image;
+
+    @Transient
+    private String completeImage;
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public String getCompleteImage() {
+        return completeImage;
+    }
+
+    public void setCompleteImage(String completeImage) {
+        this.completeImage = completeImage;
+    }
+
+
+
+
+
     @Column(name ="Quantity")
     private Integer Quantity;
     @Column(name="Isactive")
@@ -85,13 +111,7 @@ public class product {
         this.price = price;
     }
 
-    public String getImage() {
-        return Image;
-    }
 
-    public void setImage(String image) {
-        Image = image;
-    }
 
     public Integer getQuantity() {
         return Quantity;

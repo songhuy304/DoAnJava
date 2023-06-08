@@ -67,12 +67,14 @@
                         <th>STT</th>
                         <th>Tên</th>
                         <th>Hành Động</th>
+                        <td>ảnh</td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="category : ${categories}">
                         <td th:text="${category.id}"></td>
                         <td th:text="${category.namecategory}"></td>
+<!--                        <td><img th:src="*{'data:image/png;base64,'+ ${category.image}}" alt=""></td>-->
 
 
                         <td>
@@ -80,6 +82,9 @@
                             <a th:href="@{/admin/category/edit/{id}(id=${category.id})}"class="btn btn-danger" >Edit</a>
 
 <!--                            p-->
+                        </td>
+                        <td>
+                            <img th:src="${category.completeImage}" alt="Product Image">
                         </td>
                     </tr>
 

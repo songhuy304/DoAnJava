@@ -78,13 +78,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="product , i : ${LIST_PRODUCT.content}" var="p">
+                    <tr th:each="product , i : ${products}" >
                         <td th:text="${i.index + 1}"></td>
                         <td th:text="${product.title}"></td>
+<!--                        <td>-->
+<!--                            <img th:src="@{/img/__${product.image}__}" alt="Product Image"/>-->
+
+
+<!--                        </td>-->
                         <td>
-                            <img th:src="@{/img/__${product.image}__}" alt="Product Image"/>
-
-
+                            <img th:src="${product.completeImage}" alt="Product Image">
                         </td>
 
                         <td  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +'VND'  "></td>
@@ -111,16 +114,14 @@
 
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="/admin/product/page?p=0">First</a></li>
-                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.number - 1})}">Previous</a></li>
-                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.number + 1})}">Next</a></li>
-                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_PRODUCT.totalPages - 1 })}">Next</a></li>
-
-
+                <nav aria-label="Page navigation example" style="display: flex;">
+                    <ul class="pagination justify-content-center pagination-sm"
+                        th:each="i : ${#numbers.sequence(0, totalPages)}">
+                        <li class="page-item" th:classappend="${currentPage == i} ?'active'">
+                            <a class="page-link" th:href="@{/admin/product(pageNo=${i})}"
+                               th:text="${i}"></a>
+                        </li>
                     </ul>
-
                 </nav>
             </div>
 

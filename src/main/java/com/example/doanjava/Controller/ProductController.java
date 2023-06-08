@@ -32,7 +32,7 @@ public class ProductController {
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy) {
-        model.addAttribute("products", productsService.getAllproducts(pageNo,
+        model.addAttribute("products", productsService.getAllmoi(pageNo,
                 pageSize, sortBy));
         model.addAttribute("currentPage", pageNo);
 
