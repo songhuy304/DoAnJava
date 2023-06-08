@@ -64,6 +64,31 @@ public class ProductAdminController {
         productsService.deleteproduct(id);
         return "redirect:/admin/product/page";
     }
+    @GetMapping("/edit/{id}")
+    public String editproductForm(@PathVariable("id") Long id, Model model) {
+        product product = productsService.getproductId(id);
+        model.addAttribute("products", product);
+        model.addAttribute("categories", categoryService.getAllcategory());
+        return "Admin/edit";
+    }
+    @PostMapping("/edit/{id}")
+    public String editproduct(@PathVariable("id") Long id, @ModelAttribute("product") product product) {
+        product existingProduct1 = productsService.getproductId(id);
+        existingProduct1.setTitle(product.getTitle());
+        existingProduct1.setDescription(product.getDescription());
+        existingProduct1.setImage(product.getImage());
+        existingProduct1.setCategory(product.getCategory());
+        existingProduct1.setPrice(product.getPrice());
+        existingProduct1.setQuantity(product.getQuantity());
+        existingProduct1.setIsactive(product.getIsactive());
+
+
+        productsService.updateBook(existingProduct1);
+        return "redirect:admin/product/page";
+    }
+
+
+
 
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -103,7 +103,7 @@
                             <a th:href="@{/admin/product/delete/{id}(id=${product.id})}"
                                onclick="return confirm('Ban co Chac chan?')"> <i style="color: red"
                                                                                  class='bx bx-trash'></i></a>
-
+                            <a th:href="@{/admin/product/edit/{id}(id=${product.id})}">234</a>
 
                         </td>
                     </tr>
