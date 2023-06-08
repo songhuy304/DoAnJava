@@ -41,5 +41,22 @@ public class CategoryAdminController {
         return "redirect:/admin/category";
 
     }
+    @GetMapping("/edit/{id}")
+    public String editcategoryForm(@PathVariable("id") Long id, Model model) {
+        Category category = categoryService.getcategoryId(id);
+        model.addAttribute("category", category);
+
+        return "Admin/category/edit";
+    }
+    @PostMapping("/edit/{id}")
+    public String editproduct(@PathVariable("id") Long id, @ModelAttribute("category") Category category) {
+        Category category1 = categoryService.getcategoryId(id);
+
+        category1.setNamecategory(category.getNamecategory());
+
+
+        categoryService.updatecate(category1);
+        return "Admin/category/hienthi";
+    }
 
 }
