@@ -66,10 +66,10 @@
             <th:block th:each="product : ${list}">
             <div class="item">
               <div class="work">
-                <div class="img d-flex align-items-end justify-content-center" th:style="'background-image: url(\'' + ${'/img/' + product.image} + '\');'">
+                <div class="img d-flex align-items-end justify-content-center" th:style="'background-image: url(${product.completeImage});'">
                   <div class="text w-100">
                     <span class="cat">Special</span>
-                   <h3 th:text="${product.title}"></h3>
+                   <h3 style="color: #00e4ff;" th:text="${product.title}"></h3>
                   </div>
                 </div>
               </div>

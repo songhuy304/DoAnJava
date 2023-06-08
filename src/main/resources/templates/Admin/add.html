@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -63,7 +63,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form th:action="@{/admin/product/add}" th:object="${product}" method="post">
+                        <form th:action="@{/admin/product/add}" th:object="${products}" method="post" enctype="multipart/form-data">
                         <!-- your steps content here -->
                         <div id="logins-part" class="content active dstepper-block" role="tabpanel"
                              aria-labelledby="logins-part-trigger">
@@ -75,9 +75,13 @@
                                 <label class="form-label" >Miêu Tả</label>
                                 <input  class="form-control" type="text" th:field="*{description}" id="description">
                             </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="form-label" >Ảnh</label>-->
+<!--                                <input  class="form-control" type="text" th:field="*{image}" id="image">-->
+<!--                            </div>-->
                             <div class="form-group">
-                                <label class="form-label" >Ảnh</label>
-                                <input  class="form-control" type="text" th:field="*{image}" id="image">
+                                <label for="image" class="form-label">Image:</label>
+                                <input type="file" class="form-control" id="image"  name="file" accept="image/jpeg,image/png,image/gif" multiple/>
                             </div>
 
                             <div class="form-group">

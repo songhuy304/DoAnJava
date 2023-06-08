@@ -113,7 +113,8 @@
                                                 <div class="product_image">
                                                     <a th:href="@{/products/single/{id}(id=${product.id})}">
                                                         <img style="width: 218px ; height: 218px;"
-                                                             th:src="@{/img/__${product.image}__}" alt="Product Image"/>
+                                                        th:src="${product.completeImage}" alt="Product Image">
+<!--                                                             th:src="@{/img/__${product.image}__}" alt="Product Image"/>-->
                                                     </a>
 
                                                 </div>

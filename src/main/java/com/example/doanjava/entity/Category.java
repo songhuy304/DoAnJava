@@ -19,6 +19,15 @@ public class Category {
     public Category(){
 
     }
+
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String Image;
+    @Transient
+    private String completeImage;
+
+
     public Category(Long id, String namecategory, List<product> products) {
         Id = id;
         this.namecategory = namecategory;

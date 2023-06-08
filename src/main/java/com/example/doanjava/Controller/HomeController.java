@@ -18,7 +18,7 @@ public class HomeController {
     private productService productsService;
     @GetMapping("/home")
     public String home(Model model){
-        List<product> listproduct = productsService.getAllproduct();
+        List<product> listproduct = productsService.getAllProduct();
         List<product> firstFiveProducts = listproduct.subList(0, Math.min(listproduct.size(), 5));
         model.addAttribute("list", firstFiveProducts);
         return "product/home";
