@@ -35,12 +35,31 @@ public class Invoice {
     @Column(name = "TypePayment")
     private String TypePayment ;
 
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ToString.Exclude
+    private User user;
+    @Column(name = "iduserdangnhap")
+    private Long userId;
+    @Column(name = "MaDH")
+    private String MaDH ;
+
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<ItemInvoice> itemInvoices = new ArrayList<>();
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     public void setTypePayment(String typePayment) {
         TypePayment = typePayment;
     }
 
-    @Column(name = "MaDH")
-    private String MaDH ;
 
     public String getCustomerName() {
         return CustomerName;
@@ -66,11 +85,6 @@ public class Invoice {
         Address = address;
     }
 
-
-
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<ItemInvoice> itemInvoices = new ArrayList<>();
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

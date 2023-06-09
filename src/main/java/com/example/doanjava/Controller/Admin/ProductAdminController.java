@@ -77,7 +77,7 @@ public class ProductAdminController {
     public String deleteproduct(@PathVariable("id")  Long id){
 
         productsService.deleteproduct(id);
-        return "redirect:/admin/product/page";
+        return "redirect:/admin/product";
     }
     @GetMapping("/edit/{id}")
     public String editproductForm(@PathVariable("id") Long id, Model model) {

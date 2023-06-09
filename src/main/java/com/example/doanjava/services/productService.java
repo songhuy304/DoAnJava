@@ -55,10 +55,22 @@ public class productService {
 
 
     public List<product> searchProduct(String keyword) {
-        return productRepository.searchProduct(keyword);
+        List<product> productList = productRepository.searchProduct(keyword);
+        for (product product1 : productList) {
+            String base64Image = "data:image/jpeg;base64," + product1.getImage();
+            product1.setCompleteImage(base64Image);
+        }
+        return productList;
     }
     public List<product> searchProductByCategoryId(Long categoryId) {
-        return productRepository.searchProductByCategoryId(categoryId);
+
+        List<product> productList = productRepository.searchProductByCategoryId(categoryId);
+        for (product product1 : productList) {
+            String base64Image = "data:image/jpeg;base64," + product1.getImage();
+            product1.setCompleteImage(base64Image);
+        }
+
+        return productList;
     }
     public void Addproduct(product products ,  MultipartFile file){
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());

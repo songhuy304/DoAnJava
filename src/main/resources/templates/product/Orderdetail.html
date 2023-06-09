@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Colo Shop Categories</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/assets/styles/bootstrap4/bootstrap.min.css">
+    <th:import namespace="com.example.doanjava.daos.OrderViewModel" />
+
+    <link href="/assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/assets/styles/categories_styles.css">
+    <link rel="stylesheet" type="text/css" href="/assets/styles/categories_responsive.css">
+
+
+
+</head>
+
+<body>
+
+<div class="super_container">
+
+
+    <th:block th:replace="_Layout :: header">
+    </th:block>
+
+    <div class="head-title">
+        <div class="left">
+            <h1>Dashboard</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a class="active" href="#">Home</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- Hamburger Menu -->
+    <div class="card">
+        <div class="card-body">
+            <h3>Chi Tiêt Đơn Hàng</h3>
+            <th:block th:each="detail1 : ${donhang}">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" >Mã Đơn Hàng</label>
+                            <input class="form-control" type="text" th:value="${donhang.maDH}" id="Madh">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" >Người Mua</label>
+                            <input class="form-control" type="text" th:value="${donhang.customerName}" id="Title">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" >Số Điện Thoai</label>
+                            <input class="form-control" type="text" th:value="${donhang.phone}" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" >Ngày Mua</label>
+                            <input class="form-control" type="text" th:value="${donhang.invoiceDate}" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" >Tổng Tiền Đơn Hàng</label>
+                            <input class="form-control" type="text" th:value="${#numbers.formatDecimal(donhang.price, 0, 'COMMA', 0, 'POINT')} +'VND'" >
+                        </div>
+                    </div>
+
+                </div>
+            </th:block>
+        </div>
+
+
+
+    </div>
+</div>
+    <div class="container product_section_container" style="margin-top: 0;">
+        <div class="row">
+            <div class="col product_section clearfix">
+                <div class="row">
+                    <div class="col-md-12" id="load_data">
+                        <div class="px-4 px-lg-0">
+
+                            <div class="pb-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12 p-1 bg-white rounded shadow-sm mb-5">
+
+
+                                            <div class="table-responsive">
+
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr class="text-center">
+                                                        <th scope="col" class="border-0 bg-light">
+                                                            <div class="py-2 text-uppercase">#</div>
+                                                        </th>
+                                                        <th scope="col" class="border-0 bg-light">
+                                                            <div class="py-2 text-uppercase">Tên Sản Phẩm</div>
+                                                        </th>
+                                                        <th scope="col" class="border-0 bg-light">
+                                                            <div class="py-2 text-uppercase">Giá</div>
+                                                        </th>
+                                                        <th scope="col" class="border-0 bg-light">
+                                                            <div class="py-2 text-uppercase">Số Lượng</div>
+                                                        </th>
+                                                        <th scope="col" class="border-0 bg-light">
+                                                            <div class="py-2 text-uppercase">Thành Tiền</div>
+                                                        </th>
+                                                        <th scope="col" class="border-0 bg-light">
+                                                            <div class="py-2 text-uppercase"></div>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr th:each="product1, i : ${invoiceItems1}" class="text-center">
+                                                        <td class="border-0 align-middle">
+                                                            <div class="p-2">
+
+                                                                <div class="ml-3 d-inline-block align-middle">
+                                                                    <h5 class="mb-0"  th:text="${i.index + 1}"></h5>
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="border-0 align-middle" th:text="${product1.product.title} "></td>
+
+                                                        <td class="border-0 align-middle" th:text="${product1.price}"></td>
+                                                        <td class="border-0 align-middle" th:text="${product1.quantity}"></td>
+
+                                                        <td class="border-0 align-middle" th:text="${#numbers.formatDecimal(product1.price * product1.quantity, 0, 'COMMA', 0, 'POINT')} +'VND' ">
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    </tbody>
+                                                </table>
+
+
+
+
+
+                                                <div class="col-md-12 text-center">
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <th:block th:replace="_Layout :: footer">
+    </th:block>
+
+</div>
+
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/styles/bootstrap4/popper.js"></script>
+<script src="/assets/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/assets/plugins/easing/easing.js"></script>
+<script src="/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="/assets/js/categories_custom.js"></script>
+<script src="/assets/js/js.js"></script>
+</body>
+
+</html>

@@ -5,9 +5,11 @@ import com.example.doanjava.daos.Item;
 import com.example.doanjava.daos.OrderViewModel;
 import com.example.doanjava.entity.Invoice;
 import com.example.doanjava.entity.ItemInvoice;
+import com.example.doanjava.entity.User;
 import com.example.doanjava.repository.IInvoiceRepository;
 import com.example.doanjava.repository.IItemInvoiceRepository;
 import com.example.doanjava.repository.IProductRepository;
+import com.example.doanjava.repository.IUserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -18,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.SERIALIZABLE,
@@ -28,6 +31,7 @@ public class CartService {
     private final IInvoiceRepository invoiceRepository;
     private final IItemInvoiceRepository itemInvoiceRepository;
     private final IProductRepository productRepositoryRepository;
+    private final IUserRepository iUserRepositoryRepository;
     private static final String CART_SESSION_KEY = "cart";
     public Cart getCart(@NotNull HttpSession session) {
         return Optional.ofNullable((Cart)
@@ -66,6 +70,22 @@ public class CartService {
         invoice.setPhone(ord.getPhone());
         invoice.setMaDH(generateOrderCode());
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String currentUserName = authentication.getName();
+
+
+            User currentUser = iUserRepositoryRepository.findByUserName(currentUserName);
+
+            if (currentUser != null) {
+                invoice.setUser(currentUser);
+                invoice.setUserId(currentUser.getId());
+            }
+        }
+
+
+// Lưu đơn hàng vào cơ sở dữ liệu
+        invoiceRepository.save(invoice);
         invoice.setTypePayment(ord.getTypePayment());
         invoiceRepository.save(invoice);
         cart.getCartItems().forEach(item -> {

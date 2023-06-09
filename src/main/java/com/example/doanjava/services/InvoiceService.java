@@ -1,15 +1,20 @@
 package com.example.doanjava.services;
 
 import com.example.doanjava.entity.Invoice;
+import com.example.doanjava.entity.User;
 import com.example.doanjava.entity.product;
 import com.example.doanjava.repository.IInvoiceRepository;
 import com.example.doanjava.repository.IItemInvoiceRepository;
 import com.example.doanjava.repository.IProductRepository;
+import com.example.doanjava.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +27,8 @@ public class InvoiceService {
     private IItemInvoiceRepository iItemInvoiceRepository;
     @Autowired
     private IProductRepository productRepository;
+    @Autowired
+    private IUserRepository userRepository;
     public List<Invoice> getAllorder(){
         return invoiceRepository.findAll();
     }
@@ -58,7 +65,27 @@ public class InvoiceService {
 //        return invoiceRepository.searchProduct(keyword);
 //    }
 
+    public List<Invoice> getInvoicesByUserId(Long userId) {
+        return invoiceRepository.findByUserId(userId);
+    }
+    public List<Invoice> getUserInvoices() {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String currentUserName = authentication.getName();
+
+
+            User currentUser = userRepository.findByUserName(currentUserName);
+
+            if (currentUser != null) {
+
+                List<Invoice> invoices = invoiceRepository.findByUserId(currentUser.getId());
+                return invoices;
+            }
+        }
+
+        return Collections.emptyList();
+    }
     public void updateBook(Invoice invoice){
         invoiceRepository.save(invoice);
 
