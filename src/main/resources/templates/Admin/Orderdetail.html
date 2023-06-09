@@ -92,7 +92,15 @@
                 <input class="form-control" type="text" th:value="${single.invoiceDate}" >
               </div>
             </div>
+          </div>
+          <div class="row">
 
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label" >Tổng Tiền Đơn Hàng</label>
+                <input class="form-control" type="text" th:value="${#numbers.formatDecimal(single.price, 0, 'COMMA', 0, 'POINT')} +'VND'" >
+              </div>
+            </div>
 
           </div>
         </th:block>
@@ -121,10 +129,12 @@
         <td  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +'VND'  "></td>
 
         <td th:text="${product.quantity}"></td>
-        <td  th:text="${#numbers.formatDecimal(product.invoice.price, 0, 'COMMA', 0, 'POINT')} +'VND'  "></td>
+        <td  th:text="${#numbers.formatDecimal(product.price * product.quantity, 0, 'COMMA', 0, 'POINT')} +'VND'  "></td>
+
       </tr>
 
       </tbody>
+
     </table>
   </main>
 </section>
