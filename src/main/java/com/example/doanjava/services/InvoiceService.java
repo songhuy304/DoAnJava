@@ -3,6 +3,7 @@ package com.example.doanjava.services;
 import com.example.doanjava.entity.Invoice;
 import com.example.doanjava.entity.product;
 import com.example.doanjava.repository.IInvoiceRepository;
+import com.example.doanjava.repository.IItemInvoiceRepository;
 import com.example.doanjava.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,10 @@ import java.util.Optional;
 public class InvoiceService {
     @Autowired
     private IInvoiceRepository invoiceRepository;
+    @Autowired
+    private IItemInvoiceRepository iItemInvoiceRepository;
+    @Autowired
+    private IProductRepository productRepository;
     public List<Invoice> getAllorder(){
         return invoiceRepository.findAll();
     }
@@ -24,6 +29,9 @@ public class InvoiceService {
         return invoiceRepository.findAll(pageable);
     }
 
+    public product getProductById(Long productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
     public Integer getTotalCount() {
         long count = invoiceRepository.countByIdNotNull();
         return Math.toIntExact(count);

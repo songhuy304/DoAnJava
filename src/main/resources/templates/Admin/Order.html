@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -110,7 +110,7 @@
 
                         <td  th:text="${#numbers.formatDecimal(invoi.price, 0, 'COMMA', 0, 'POINT')}   "></td>
 
-
+                        <td>   <a th:href="@{/admin/Order/view/{id}(id=${invoi.id})}" class="btn btn-success">Xem</a> </td>
 
                     </tr>
 

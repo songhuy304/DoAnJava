@@ -70,7 +70,7 @@ public class ProductAdminController {
     public String addproduct(@ModelAttribute("products") product products,@RequestParam("file") MultipartFile file){
         productsService.Addproduct(products ,file);
 
-        return "redirect:/admin/product/page";
+        return "redirect:/admin/product";
 
     }
     @GetMapping("/delete/{id}")
