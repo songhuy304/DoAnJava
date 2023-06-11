@@ -9,6 +9,8 @@ import com.example.doanjava.entity.CustomUserDetail;
 import com.example.doanjava.entity.User;
 import com.example.doanjava.repository.IUserRepository;
 
+import java.util.Optional;
+
 @Service
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
@@ -19,5 +21,9 @@ public class CustomUserDetailService implements UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException("User not found");
         return new CustomUserDetail(user,userRepository);
+    }
+    public Optional<User> findByUsername(String username) throws
+            UsernameNotFoundException {
+        return userRepository.findByUsername(username);
     }
 }

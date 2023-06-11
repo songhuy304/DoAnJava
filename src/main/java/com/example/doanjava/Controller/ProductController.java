@@ -98,8 +98,6 @@ public class ProductController {
                             @RequestParam long id,
                             @RequestParam String name,
                             @RequestParam double price,
-
-
                             @RequestParam(defaultValue = "1") int quantity)
     {
         var cart = cartService.getCart(session);

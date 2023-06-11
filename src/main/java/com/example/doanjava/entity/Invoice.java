@@ -35,7 +35,8 @@ public class Invoice {
     @Column(name = "TypePayment")
     private String TypePayment ;
 
-
+    @Column(name = "Status")
+    private Boolean Status ;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
