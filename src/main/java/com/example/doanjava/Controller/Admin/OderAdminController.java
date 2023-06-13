@@ -13,11 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Controller
@@ -38,6 +38,32 @@ public class OderAdminController {
         model.addAttribute("total" ,totalPrice );
         Integer  countMaDH = invoiceService.getTotalCount();
         model.addAttribute("countDH" ,countMaDH );
+
+        return "Admin/Order";
+    }
+    @PostMapping("/filter")
+    public String filterOrdersByDateRange(@RequestParam("startDate") String startDate,
+                                          @RequestParam("endDate") String endDate,
+                                          Model model) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedStartDate = null;
+        Date parsedEndDate = null;
+        try {
+            parsedStartDate = sdf.parse(startDate);
+            parsedEndDate = sdf.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        List<Invoice> filteredList = invoiceService.getOrderByDate(parsedStartDate, parsedEndDate);
+        model.addAttribute("LIST_Invoice", filteredList);
+
+
+        Double totalPrice = invoiceService.getTotalPriceByDate(parsedStartDate, parsedEndDate);
+        model.addAttribute("total", totalPrice);
+
 
         return "Admin/Order";
     }

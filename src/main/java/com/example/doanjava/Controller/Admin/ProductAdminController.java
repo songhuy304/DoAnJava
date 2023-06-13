@@ -44,13 +44,7 @@ public class ProductAdminController {
         return "Admin/Product";
     }
 
-//    @GetMapping("/page")
-//    public String showAllproduct(Model model , @RequestParam("p") Optional<Integer> p ){
-//        Pageable pageable = (Pageable) PageRequest.of(p.orElse(0) ,10);
-//        Page<product> page = productsService.findAll(pageable);
-//        model.addAttribute("LIST_PRODUCT",page);
-//        return "Admin/Product";
-//    }
+
 
     @GetMapping("/add")
     public String addproductForm(Model model){
@@ -75,25 +69,27 @@ public class ProductAdminController {
     }
     @GetMapping("/edit/{id}")
     public String editproductForm(@PathVariable("id") Long id, Model model) {
-//        product product = productsService.getproductId(id);
-//        model.addAttribute("products", product);
-//        model.addAttribute("categories", categoryService.getAllcategory());
+        product product = productsService.getproductId(id);
+        model.addAttribute("categories", categoryService.getAllcategory());
+
+
+        model.addAttribute("product", product);
         return "Admin/edit";
     }
     @PostMapping("/edit/{id}")
-    public String editproduct(@PathVariable("id") Long id, @ModelAttribute("product") product product) {
-        product existingProduct1 = productsService.getproductId(id);
-        existingProduct1.setTitle(product.getTitle());
-        existingProduct1.setDescription(product.getDescription());
-        existingProduct1.setImage(product.getImage());
-        existingProduct1.setCategory(product.getCategory());
-        existingProduct1.setPrice(product.getPrice());
-        existingProduct1.setQuantity(product.getQuantity());
-        existingProduct1.setIsactive(product.getIsactive());
+    public String editproduct(@PathVariable("id") Long id, @ModelAttribute("product") product product ,@RequestParam("file") MultipartFile file) {
+        product product1 = productsService.getproductId(id);
+
+        product1.setTitle(product.getTitle());
+        product1.setDescription(product.getDescription());
+        product1.setQuantity(product.getQuantity());
+        product1.setPrice(product.getPrice());
+
+        product1.setCategory(product.getCategory());
 
 
-        productsService.updateBook(existingProduct1);
-        return "redirect:admin/product/page";
+        productsService.Addproduct(product1 ,file);
+        return "redirect:/admin/product";
     }
 
 

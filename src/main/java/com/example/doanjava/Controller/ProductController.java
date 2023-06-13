@@ -107,7 +107,7 @@ public class ProductController {
     }
     @GetMapping("/single/{id}")
     public String test(@PathVariable("id") Long id , Model model){
-        product item =  productsService.getproductId(id);
+        product item =  productsService.getProductSingle(id);
         model.addAttribute("single" , item);
         return "product/single";
     }

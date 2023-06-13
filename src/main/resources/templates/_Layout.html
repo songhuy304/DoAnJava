@@ -59,6 +59,12 @@
     top: 35px;
 ">
                   <form th:action="@{/logout}"  method="post">
+                    <span th:text="${#authentication.principal.name}"></span>
+                    <!-- In ra tên người dùng -->
+
+<!--                    <input type="hidden" th:value="${#authentication.principal.id}" name="userId" />-->
+                    <!-- In ra ID người dùng và lưu trữ trong input hidden (nếu cần) -->
+
                     <button class="btn btn-outline-danger" type="submit">Logout</button>
                   </form>
 

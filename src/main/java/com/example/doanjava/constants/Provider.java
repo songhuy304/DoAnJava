@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum Provider {
     LOCAL("Local"),
+
+    GITHUB("GitHub"),
     GOOGLE("Google");
 
 

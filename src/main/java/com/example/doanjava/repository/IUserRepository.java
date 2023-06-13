@@ -30,6 +30,11 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     Long getUserIdByUsername(String username);
     @Query(value = "SELECT r.name FROM role r JOIN user_role ur ON r.id = ur.role_id WHERE ur.user_id = ?1", nativeQuery = true)
     String[] getRoleOfUser(Long userId);
+
+
+
+    @Query(value = "SELECT r.name AS name FROM role r JOIN user_role ur ON r.id = ur.role_id WHERE ur.user_id = ?1", nativeQuery = true)
+    String[] getRoleOfUserr(Long userId);
     default List<User> findAllBooks(Integer pageNo,
                                        Integer pageSize,
                                        String sortBy) {

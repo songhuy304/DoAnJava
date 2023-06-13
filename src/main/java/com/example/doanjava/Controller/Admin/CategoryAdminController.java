@@ -57,7 +57,7 @@ public class CategoryAdminController {
 
 
         categoryService.updatecate(category1);
-        return "Admin/category/hienthi";
+        return "redirect:/admin/category";
     }
 
 }

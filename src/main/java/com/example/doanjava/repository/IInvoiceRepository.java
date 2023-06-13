@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -14,6 +15,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice,
     @Query("SELECT SUM(i.price) FROM Invoice i")
     Integer getTotalPrice();
     long countByIdNotNull();
+    List<Invoice> findByInvoiceDateBetween(Date startDate, Date endDate);
 
     List<Invoice> findByUserId(Long userId);
 

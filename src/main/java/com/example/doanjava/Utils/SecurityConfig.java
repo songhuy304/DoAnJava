@@ -3,6 +3,7 @@ package com.example.doanjava.Utils;
 import com.example.doanjava.services.OAuthService;
 import com.example.doanjava.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.example.doanjava.services.CustomUserDetailService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -79,6 +80,7 @@ public class SecurityConfig {
                         .successHandler(
                                 (request, response,
                                  authentication) -> {
+
                                     var oidcUser =
                                             (DefaultOidcUser) authentication.getPrincipal();
                                     userService1.saveOauthUser(oidcUser.getEmail(), oidcUser.getName());

@@ -52,6 +52,18 @@ public class productService {
         return optional.orElse(null);
 
     }
+    public product getProductSingle(Long id) {
+        Optional<product> optional = productRepository.findById(id);
+
+        if (optional.isPresent()) {
+            product product1 = optional.get();
+            String base64Image = "data:image/jpeg;base64," + product1.getImage();
+            product1.setCompleteImage(base64Image);
+            return product1;
+        } else {
+            return null;
+        }
+    }
 
 
     public List<product> searchProduct(String keyword) {

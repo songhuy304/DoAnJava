@@ -61,9 +61,6 @@ public class UserController {
         model.addAttribute("user", userService.getAllmoi(pageNo,
                 pageSize, sortBy));
         model.addAttribute("currentPage", pageNo);
-
-
-
         int totalProducts = userService.getAllmoi(pageNo, pageSize, sortBy).size();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
@@ -74,10 +71,7 @@ public class UserController {
     public String showAllBooks1(
             @NotNull Model model
            ) {
-
-
         model.addAttribute("user", invoiceService.getUserInvoices());
-
         return "product/donhang";
     }
     @GetMapping("/thongtindonhang/view/{id}")
@@ -88,6 +82,4 @@ public class UserController {
         model.addAttribute("invoiceItems1", invoiceItems);
         return "product/Orderdetail";
     }
-
-
 }

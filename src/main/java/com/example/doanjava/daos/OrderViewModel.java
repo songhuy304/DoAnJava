@@ -1,4 +1,7 @@
 package com.example.doanjava.daos;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -13,6 +16,18 @@ public class OrderViewModel {
     @NotBlank(message = "Address is required")
     @Size(min = 5, max = 100, message = "Address must be between 5 and 100 characters")
     private String Address;
+    @Column(name = "email",length = 50)
+    @jakarta.validation.constraints.Size(max = 50,message = "Email must be less than 50 characters")
+    @Email(message = "Email should be valid")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getTypePayment() {
         return TypePayment;

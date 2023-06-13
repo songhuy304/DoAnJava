@@ -53,7 +53,7 @@ public class UserService {
     }
 
     public void saveOauthUser(String email, @NotNull String username) {
-        Optional<User> existingUser = userRepository.findByUsername(email);
+        Optional<User> existingUser = userRepository.findByUsername(username);
         if (existingUser.isPresent()) {
             return ;
         }

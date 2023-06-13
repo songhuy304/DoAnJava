@@ -53,7 +53,7 @@ public class CartService {
                 .mapToInt(Item::getQuantity)
                 .sum();
     }
-    public double       getSumPrice(@NotNull HttpSession session) {
+    public double getSumPrice(@NotNull HttpSession session) {
         return getCart(session).getCartItems().stream()
                 .mapToDouble(item -> item.getPrice() *
                         item.getQuantity())
@@ -68,24 +68,19 @@ public class CartService {
         invoice.setCustomerName(ord.getCustomerName());
         invoice.setAddress(ord.getAddress());
         invoice.setPhone(ord.getPhone());
-        invoice.setMaDH(generateOrderCode());
+            invoice.setMaDH(generateOrderCode());
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated()) {
+                String currentUserName = authentication.getName();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String currentUserName = authentication.getName();
 
+                User currentUser = iUserRepositoryRepository.findByUserName(currentUserName);
 
-            User currentUser = iUserRepositoryRepository.findByUserName(currentUserName);
-
-            if (currentUser != null) {
-                invoice.setUser(currentUser);
-                invoice.setUserId(currentUser.getId());
+                if (currentUser != null) {
+                    invoice.setUser(currentUser);
+                    invoice.setUserId(currentUser.getId());
+                }
             }
-        }
-
-
-// Lưu đơn hàng vào cơ sở dữ liệu
-        invoiceRepository.save(invoice);
         invoice.setTypePayment(ord.getTypePayment());
         invoiceRepository.save(invoice);
         cart.getCartItems().forEach(item -> {

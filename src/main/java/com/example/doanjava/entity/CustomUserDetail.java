@@ -48,6 +48,9 @@ public class CustomUserDetail implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+    public String getName() {
+        return user.getName();
+    }
 
     @Override
     public boolean isEnabled() {

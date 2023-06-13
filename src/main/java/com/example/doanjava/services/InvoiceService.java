@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +55,16 @@ public class InvoiceService {
 
         return totalPrice;
     }
+    public Double getTotalPriceByDate(Date startDate, Date endDate) {
+        List<Invoice> invoices = getOrderByDate(startDate, endDate);
+
+        double totalPrice = 0;
+        for (Invoice invoice : invoices) {
+            totalPrice += invoice.getPrice();
+        }
+
+        return totalPrice;
+    }
     public Invoice getOdrerId(Long id){
         Optional<Invoice> optional = invoiceRepository.findById(id);
         return optional.orElse(null);
@@ -85,6 +96,10 @@ public class InvoiceService {
         }
 
         return Collections.emptyList();
+    }
+    public List<Invoice> getOrderByDate(Date startDate, Date endDate) {
+        List<Invoice> invoices = invoiceRepository.findByInvoiceDateBetween(startDate, endDate);
+        return invoices;
     }
     public void updateBook(Invoice invoice){
         invoiceRepository.save(invoice);
