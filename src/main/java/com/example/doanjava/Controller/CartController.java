@@ -77,28 +77,34 @@ public class CartController {
         Date currentDate = new Date();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         String formattedTotalAmount = decimalFormat.format(cartService.getSumPrice(session));
+
         Cart cart = cartService.getCart(session);
         List<Item> cartItems = cart.getCartItems();
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = dateFormat.format(currentDate);
-        String to = ord.getEmail(); // Địa chỉ email của người nhận
+
+
+        String to = ord.getEmail();
         String subject = "Xác Nhận Đơn hàng";
         String body = "Đơn Hàng Của Bạn Được Đặt Thành Công\n";
         body += "-------------------------------------------------" + "\n";
         body += "|Người Nhận: " + ord.getCustomerName() + "|"+ "\n";
         body += "|Địa Chỉ Người Nhận: " + ord.getAddress() + "|"+"\n";
-        body += "|Người Gửi: Kim Jong Huy" +"|"+ "\n";
+
         body += "|Chi Tiết Sản Phẩm" +"|"+ "\n";
 
         for (Item cartItem : cartItems) {
             DecimalFormat decimalFormat1 = new DecimalFormat("#,### VND");
             String formattedTotalAmount1 = decimalFormat1.format(cartItem.getQuantity() * cartItem.getPrice());
-            body += "|Tên Sản Phẩm: " + cartItem.getBookName()  + "  | "+ "Số Lượng : "+ cartItem.getQuantity() +"Thành Tiền : " + formattedTotalAmount1 ;
+            body += "|Tên Sản Phẩm: " + cartItem.getBookName()  + "\n"+ "Số Lượng : "+ cartItem.getQuantity() + "\n" +"Thành Tiền : " + formattedTotalAmount1 + "\n" ;
+            body += "----------------";
             body += "\n";
         }
-        body += "-------------------------------------------------";
+        body +=  "-------------------------------------------------" + "\n";
         body += "|Tổng tiền: " + formattedTotalAmount + "|"+"\n";
         body += "|Ngày gửi: " + formattedDate  + "|"+"\n";
+        body += "|Người Gửi: Kim Jong Huy" +"|"+ "\n";
         sendEmail(to, subject, body);
         cartService.saveCart(session, ord);
         return "redirect:/cart";

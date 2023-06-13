@@ -63,42 +63,17 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form th:action="@{/admin/product/edit/{id}(id=${product.id})}" th:object="${product}" method="post"  enctype="multipart/form-data">
+                        <form th:action="@{/admin/Order/edit/{id}(id=${invoice.id})}" th:object="${invoice}" method="post" >
                             <!-- your steps content here -->
                             <div id="logins-part" class="content active dstepper-block" role="tabpanel"
                                  aria-labelledby="logins-part-trigger">
-                                <div class="form-group">
-                                    <label class="form-label" >Tên danh mục</label>
-                                    <input  class="form-control" type="text" th:field="*{title}" id="Title">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" >description</label>
-                                    <input  class="form-control" type="text" th:field="*{description}" id="description">
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="form-label" >Tên danh mục</label>
-                                    <label class="form-label" >Category</label>
-                                    <select class="form-control" id="category" name="category">
-
-                                        <option th:each="category : ${categories}" th:value="${category.id}"
-                                                th:text="${category.namecategory}">
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" >price</label>
-                                    <input  class="form-control" type="text" th:field="*{price}" id="price">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" >quantity</label>
-                                    <input  class="form-control" type="text" th:field="*{quantity}" id="quantity">
-                                </div>
-                                <div class="col-2">
-                                    <label class="form-label" >Is Active</label>
-                                    <input  class="form-control" type="checkbox" th:field="*{isactive}" id="isactive">
+                                <div class="col-5">
+                                    <label class="form-label" >Is Status</label>
+                                    <input  class="form-control" type="checkbox" th:field="*{Status}" id="Status">
 
                                 </div>
+
 
 
                                 <div class="form-group">

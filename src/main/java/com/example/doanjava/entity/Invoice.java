@@ -34,7 +34,6 @@ public class Invoice {
     private String Address;
     @Column(name = "TypePayment")
     private String TypePayment ;
-
     @Column(name = "Status")
     private Boolean Status ;
 
@@ -77,7 +76,13 @@ public class Invoice {
     public void setPhone(String phone) {
         Phone = phone;
     }
+    public Boolean getStatus() {
+        return Status;
+    }
 
+    public void setStatus(Boolean status) {
+        Status = status;
+    }
     public String getAddress() {
         return Address;
     }

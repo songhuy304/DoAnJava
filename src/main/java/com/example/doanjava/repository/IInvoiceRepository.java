@@ -2,6 +2,9 @@ package com.example.doanjava.repository;
 
 
 import com.example.doanjava.entity.Invoice;
+import com.example.doanjava.entity.product;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,5 +21,13 @@ public interface IInvoiceRepository extends JpaRepository<Invoice,
     List<Invoice> findByInvoiceDateBetween(Date startDate, Date endDate);
 
     List<Invoice> findByUserId(Long userId);
+    default List<Invoice> findAllBooks(Integer pageNo,
+                                       Integer pageSize,
+                                       String sortBy) {
+        return findAll(PageRequest.of(pageNo,
+                pageSize,
+                Sort.by(sortBy)))
 
+                .getContent();
+    }
 }

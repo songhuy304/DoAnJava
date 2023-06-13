@@ -94,7 +94,9 @@
                         <th>Mã DH</th>
                         <th>Số Điện Thoại Đặt</th>
                         <th>Ngày Đặt</th>
+                        <th>Trạng Thái</th>
                         <th>Tổng Tiền</th>
+                        <th></th>
 
                     </tr>
                     </thead>
@@ -105,27 +107,36 @@
                         <td th:text="${invoi.getPhone()}"></td>
                         <td th:text="${#dates.format(invoi.getInvoiceDate(), 'dd/MM/yyyy')}"></td>
 
-
+                        <td>
+                                <span th:if="${invoi.getStatus() }">
+                                 <i class='bx bx-check' style='color:#08f43b'  ></i>
+                                 </span>
+                            <span th:unless="${invoi.getStatus() }">
+                            <i class='bx bx-x' style='color:#f50218'  ></i>
+                             </span>
+                        </td>
 
                         <td  th:text="${#numbers.formatDecimal(invoi.price, 0, 'COMMA', 0, 'POINT')}   "></td>
 
-                        <td>   <a th:href="@{/admin/Order/view/{id}(id=${invoi.id})}" class="btn btn-success">Xem</a> </td>
+                        <td>   <a th:href="@{/admin/Order/view/{id}(id=${invoi.id})}" class="btn btn-success">Xem</a>
+                               <a th:href="@{/admin/Order/edit/{id}(id=${invoi.id})}" class="btn btn-success">Sửa</a>
+
+                        </td>
 
                     </tr>
 
 
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-<!--                        <li class="page-item"><a class="page-link" href="/admin/product/page?p=0">First</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_Invoice.number - 1})}">Previous</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_Invoice.number + 1})}">Next</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" th:href="@{/admin/product/page(p=${LIST_Invoice.totalPages - 1 })}">Next</a></li>-->
 
-
+                <nav aria-label="Page navigation example" style="display: flex;">
+                    <ul class="pagination justify-content-center pagination-sm"
+                        th:each="i : ${#numbers.sequence(0, totalPages)}">
+                        <li class="page-item" th:classappend="${currentPage == i} ?'active'">
+                            <a class="page-link" th:href="@{/admin/Order(pageNo=${i})}"
+                               th:text="${i}"></a>
+                        </li>
                     </ul>
-
                 </nav>
             </div>
 
@@ -139,35 +150,35 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var input = document.getElementById('searchInput');
 
-        input.addEventListener('keyup', function(event) {
-            if (event.keyCode === 13) { // Kiểm tra nút Enter được nhấn
-                var searchText = event.target.value.toLowerCase();
-                var rows = document.querySelectorAll('table tr');
+$(document).ready(function() {
+  $('.status-link').on('click', function(event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
 
-                rows.forEach(function(row) {
-                    var columns = row.getElementsByTagName('td');
-                    var found = false;
+    var productId = $(this).closest('.status-toggle').data('id');
+    var statusIcon = $(this).find('i');
+    var newStatus = statusIcon.hasClass('bx-check') ? false : true;
+    console.log(productId);
+    // Gửi yêu cầu Ajax để cập nhật trạng thái sản phẩm trong cơ sở dữ liệu
+<!--    $.ajax({-->
+<!--      type: "POST",-->
+<!--      url: "/admin/Order/edit1/" + productId,-->
+<!--      data: { status: newStatus },-->
+<!--      success: function(response) {-->
+<!--        // Cập nhật giao diện người dùng dựa trên phản hồi thành công từ server-->
+<!--        if (newStatus) {-->
+<!--          statusIcon.removeClass('bx-x').addClass('bx-check').css('color', '#08f43b');-->
+<!--        } else {-->
+<!--          statusIcon.removeClass('bx-check').addClass('bx-x').css('color', '#f50218');-->
+<!--        }-->
+<!--      },-->
+<!--      error: function(error) {-->
+<!--        // Xử lý lỗi khi yêu cầu không thành công-->
+<!--      }-->
+<!--    });-->
+  });
+});
 
-                    for (var i = 0; i < columns.length; i++) {
-                        var cellText = columns[i].textContent.toLowerCase();
-                        if (cellText.indexOf(searchText) > -1) {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (found) {
-                        row.style.display = ''; // Hiển thị dòng nếu tìm thấy kết quả
-                    } else {
-                        row.style.display = 'none'; // Ẩn dòng nếu không tìm thấy kết quả
-                    }
-                });
-            }
-        });
-    });
 </script>
 </body>
 </html>

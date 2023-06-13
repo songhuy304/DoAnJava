@@ -93,12 +93,16 @@
                         <td  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +'VND'  "></td>
 
                         <td>
-                            <span th:if="${product.isactive}">
-                                 <i class='bx bx-check' style='color:#08f43b'  ></i>
-                                 </span>
-                            <span th:unless="${product.isactive}">
-                            <i class='bx bx-x' style='color:#f50218'  ></i>
-                             </span>
+
+                        <td>
+                            <a data-id="product.id" href="#" th:if="${product.isactive}">
+                                <i class="bx bx-check" style="color:#08f43b"></i>
+                            </a>
+                            <a data-id="product.id" th:unless="${product.isactive}">
+                                <i class="bx bx-x" style="color:#f50218" ></i>
+                            </a>
+                        </td>
+
                         </td>
                         <td th:text="${product.quantity}"></td>
 
@@ -133,35 +137,23 @@
     <!-- MAIN -->
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.toggle-checkbox').change(function() {
+            var productId = $(this).data('id');
+            var isActive = $(this).prop('checked');
 
-<script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var input = document.getElementById('searchInput');
-
-        input.addEventListener('keyup', function(event) {
-            if (event.keyCode === 13) { // Kiểm tra nút Enter được nhấn
-                var searchText = event.target.value.toLowerCase();
-                var rows = document.querySelectorAll('table tr');
-
-                rows.forEach(function(row) {
-                    var columns = row.getElementsByTagName('td');
-                    var found = false;
-
-                    for (var i = 0; i < columns.length; i++) {
-                        var cellText = columns[i].textContent.toLowerCase();
-                        if (cellText.indexOf(searchText) > -1) {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (found) {
-                        row.style.display = ''; // Hiển thị dòng nếu tìm thấy kết quả
-                    } else {
-                        row.style.display = 'none'; // Ẩn dòng nếu không tìm thấy kết quả
-                    }
-                });
-            }
+            $.ajax({
+                type: 'POST',
+                url: '/admin/product/editt/' + productId,
+                data: { isactive: isActive },
+                success: function(response) {
+                    console.log('Status updated successfully.');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
     });
 </script>

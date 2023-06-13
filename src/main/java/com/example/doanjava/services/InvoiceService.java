@@ -37,6 +37,13 @@ public class InvoiceService {
         return invoiceRepository.findAll(pageable);
     }
 
+    public List<Invoice> getAllmoi(Integer pageNo,
+                                   Integer pageSize,
+                                   String sortBy) {
+        List<Invoice> invoices = invoiceRepository.findAllBooks(pageNo, pageSize, sortBy);
+
+        return invoices;
+    }
     public product getProductById(Long productId) {
         return productRepository.findById(productId).orElse(null);
     }
@@ -70,6 +77,7 @@ public class InvoiceService {
         return optional.orElse(null);
 
     }
+
 
 
 //    public List<Invoice> searchProduct(String keyword) {

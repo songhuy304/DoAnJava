@@ -68,7 +68,7 @@ public class CartService {
         invoice.setCustomerName(ord.getCustomerName());
         invoice.setAddress(ord.getAddress());
         invoice.setPhone(ord.getPhone());
-            invoice.setMaDH(generateOrderCode());
+        invoice.setMaDH(generateOrderCode());
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated()) {
                 String currentUserName = authentication.getName();
